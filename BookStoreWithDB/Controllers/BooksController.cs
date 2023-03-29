@@ -173,5 +173,36 @@ namespace BookStoreWithDB.Controllers
 
             return View("Index", books);
         }
+        public ActionResult Reserve(String BookId, int customerId)
+        {
+            var book = _context.Books.Find(BookId);
+            if (book == null)
+            {
+                return View("Error");
+            }
+
+            book.CustomerId = customerId;
+            Random random = new Random();
+            book.BookingId = random.Next();
+            _context.SaveChanges();
+
+            TempData["message"] = "Book reserved successfully. " ;
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult UnReserve(String BookId)
+        {
+            var book = _context.Books.Find(BookId);
+            if (book == null)
+            {
+                return View("Error");
+            }
+            book.CustomerId = null;
+            book.BookingId = null;
+            _context.SaveChanges();
+            TempData["message"] = "Book Unreserved successfully.";
+            return RedirectToAction("Index");
+
+        }
     }
 }

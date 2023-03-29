@@ -10,4 +10,7 @@ public partial class Book
     public string BookName { get; set; } = null!;
 
     public int? CustomerId { get; set; }
+
+    public int? BookingId { get; set; }
+
 }
