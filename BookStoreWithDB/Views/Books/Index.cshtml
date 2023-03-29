@@ -28,25 +28,46 @@
             <th>
                 @Html.DisplayNameFor(model => model.CustomerId)
             </th>
-            <th></th>
+            <th>
+                Is Reserved
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var book in Model) 
+        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BookName)
+                @Html.DisplayFor(modelItem => book.BookName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CustomerId)
+                @Html.DisplayFor(modelItem => book.CustomerId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                @(book.CustomerId != null ? "Yes" : "No")
+            </td>
+             <td>
+                    @if (book.CustomerId == null)
+                    {
+                        <form method="post" action="@Url.Action("Reserve", new { id = book.BookId })">
+                            <button type="submit" class="btn btn-warning">Reserve</button>
+                        </form>
+                    }
+
+                    @if (book.CustomerId != null)
+                    {
+                        <form method="post" action="@Url.Action("UnReserve", new { id = book.BookId })">
+                            <button type="submit" class="btn btn-danger">UnReserve</button>
+                        </form>
+                    }
+                </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@book.BookId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@book.BookId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@book.BookId">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
 
