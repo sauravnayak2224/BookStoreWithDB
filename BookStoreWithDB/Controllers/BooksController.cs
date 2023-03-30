@@ -88,7 +88,7 @@ namespace BookStoreWithDB.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("BookId,BookName,CustomerId")] Book book)
+        public async Task<IActionResult> Edit(string id, [Bind("BookId,BookName,CustomerId,BookingId")] Book book)
         {
             if (id != book.BookId)
             {
@@ -159,20 +159,8 @@ namespace BookStoreWithDB.Controllers
         {
           return (_context.Books?.Any(e => e.BookId == id)).GetValueOrDefault();
         }
-        public ActionResult Search(string searchTerm)
-        {
-            var books = _context.Books
-             .ToList();
 
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                books = books.Where(b => b.BookName.ToLower().Contains(searchTerm.ToLower())).ToList();
-            }
-
-            TempData["message"] = $"Search results for '{searchTerm}': {books.Count} books found.";
-
-            return View("Index", books);
-        }
+        // Reserving a Book
         public ActionResult Reserve(String BookId, int customerId)
         {
             var book = _context.Books.Find(BookId);
@@ -190,6 +178,7 @@ namespace BookStoreWithDB.Controllers
             return RedirectToAction("Index");
         }
 
+        // Unreserving a Book
         public ActionResult UnReserve(String BookId)
         {
             var book = _context.Books.Find(BookId);

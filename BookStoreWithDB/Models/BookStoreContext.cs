@@ -19,7 +19,7 @@ public partial class BookStoreContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=SNAYAK\\SQLExpress01;Database=BookStore;Trusted_Connection=True;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=tcp:snayakserver.database.windows.net,1433;Initial Catalog=BookStoreDatabase;User Id=Saurav2224@snayakserver;Password=Pass@12345");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
